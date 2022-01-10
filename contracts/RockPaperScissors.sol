@@ -64,5 +64,6 @@ contract RockPaperScissors {
         require(moveTime[msg.sender] + 30 days <= block.timestamp  && allowed[msg.sender]);
         IERC20 token = IERC20(tokenAddress);
         token.transfer(msg.sender, fare);
+        allowed[msg.sender] = false;
     }
 }
