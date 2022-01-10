@@ -4,48 +4,51 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 // to-do some incentive token to play, and variable rate depending on win or lose
-//to-do deposit limitation
+//to-do gas optimization
+//to-do security check and testing
 contract RockPaperScissors {
 
     mapping(address => uint) moves;
     mapping(address => bool) allowed;
     address tokenAddress;
+    uint fare;
 
-    constructor(address _token){
+    constructor(address _token, uint _fare){
         tokenAddress = _token;
+        fare = _fare
     }
     
-    function play(address adversary) external{
-        require(moves[msg.sender] != 0 && moves[adversary] != 0);
-        address winner = decideWinner(adversary);
+    function play(address _adversary) external{
+        require(moves[msg.sender] != 0 && moves[_adversary] != 0);
+        address winner = decideWinner(_adversary);
         
-        moves[adversary] = 0;
+        moves[_adversary] = 0;
         moves[msg.sender] = 0;
 
         allowed[msg.sender] =  false;
-        allowed[adversary] =  false;
+        allowed[_adversary] =  false;
 
         IERC20 token = IERC20(tokenAddress);
         if(winner == msg.sender){
             token.transfer(msg.sender, 200);
-        }else if(winner == adversary){
-            token.transfer(adversary, 200);
+        }else if(winner == _adversary){
+            token.transfer(_adversary, 200);
         }
         
     }
 
-    function decideWinner(address adversary) private view returns(address){
-            if (moves[msg.sender] != moves[adversary]) {
-                 return (moves[msg.sender] == (moves[adversary] + 1) % 3) ? msg.sender: adversary;
+    function decideWinner(address _adversary) private view returns(address){
+            if (moves[msg.sender] != moves[_adversary]) {
+                 return (moves[msg.sender] == (moves[_adversary] + 1) % 3) ? msg.sender: _adversary;
             } else {
                return address(0);
             }
     }
 
-    function sendMove(uint move) public {
-      require(move > 0 && move < 4);
+    function sendMove(uint _move) public {
+      require(_move > 0 && _move < 4);
       require(allowed[msg.sender]);
-      moves[msg.sender] = move;
+      moves[msg.sender] = _move;
     }
 
     function activatePlayer() external{
