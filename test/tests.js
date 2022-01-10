@@ -52,23 +52,23 @@ describe("RockPaperScissors", function () {
     //rock
     await this.rockpaperscissors.sendMove(1);
     //paper
-    await expect(this.rockpaperscissors.sendMove(2)).to.be.reverted;
+    await expect(this.rockpaperscissors.connect(this.bob).sendMove(2)).to.be.reverted;
 
   });
 
   it("Player sent invalid move", async function () {
-    //activate player 1
-    //activate player 2
-    //send move 1 invalid
-
+    await this.rockpaperscissors.activatePlayer();
+    await expect(this.rockpaperscissors.sendMove(4)).to.be.reverted;
   });
-  it("Uncooperative player", async function () {
-    //activate player 1
-    //activate player 2
-    //send move 1 
-    //play by player 1-- fail
 
-    //expect money stuck in contract
+  it("Uncooperative player", async function () {
+
+    await this.rockpaperscissors.activatePlayer();
+    
+    //rock
+    await this.rockpaperscissors.sendMove(1);
+
+    await expect(this.rockpaperscissors.play(this.bob.address)).to.be.reverted;
 
   });
 
