@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 // to-do some incentive token to play, and variable rate depending on win or lose
 //to-do gas optimization
 //to-do security check and testing
+
 contract RockPaperScissors {
 
     mapping(address => uint) moves;
@@ -15,7 +16,8 @@ contract RockPaperScissors {
 
     constructor(address _token, uint _fare){
         tokenAddress = _token;
-        fare = _fare * 10^18;
+        token = IERC20(tokenAddress);
+        fare = _fare * 10^tokenAddress.getDecimals();
     }
     
     function play(address _adversary) external{
