@@ -17,7 +17,7 @@ contract RockPaperScissors {
     constructor(address _token, uint _fare){
         tokenAddress = _token;
         token = IERC20(tokenAddress);
-        fare = _fare * 10^tokenAddress.getDecimals();
+        fare = _fare * 10^token.getDecimals();
     }
     
     function play(address _adversary) external{
@@ -46,7 +46,7 @@ contract RockPaperScissors {
                return address(0);
             }
     }
-
+    // Rock-1 Paper-2 Scissors-3
     function sendMove(uint _move) public {
       require(_move > 0 && _move < 4);
       require(allowed[msg.sender]);
