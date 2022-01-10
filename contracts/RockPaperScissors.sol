@@ -51,7 +51,7 @@ contract RockPaperScissors {
       require(_move > 0 && _move < 4);
       require(allowed[msg.sender]);
       moves[msg.sender] = _move;
-      moveTime[msg.sender] = now;
+      moveTime[msg.sender] = block.timestamp;
     }
 
     function activatePlayer() external{
@@ -60,9 +60,9 @@ contract RockPaperScissors {
         allowed[msg.sender] =  true;
     }
 
-    function uncooperativeAdversary(){
-        require(moveTime[msg.sender] >= now + 30 days && allowed[msg.sender]);
-        token = IERC20(tokenAddress);
+    function uncooperativeAdversary() public {
+        require(moveTime[msg.sender] + 30 days <= block.timestamp  && allowed[msg.sender]);
+        IERC20 token = IERC20(tokenAddress);
         token.transfer(msg.sender, fare);
     }
 }

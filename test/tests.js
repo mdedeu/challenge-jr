@@ -76,8 +76,16 @@ describe("RockPaperScissors", function () {
     //rock
     await this.rockpaperscissors.sendMove(1);
 
-    await expect(this.rockpaperscissors.play(this.bob.address)).to.be.reverted;
+    await expect(this.rockpaperscissors.uncooperativeAdversary()).to.be.reverted;
 
+    await ethers.provider.send("evm_increaseTime", [2592001]);
+    await ethers.provider.send("evm_mine");
+
+    expect(await this.sampletoken.balanceOf(this.alice.address)).to.equal(0);
+
+    await this.rockpaperscissors.uncooperativeAdversary();
+
+    expect(await this.sampletoken.balanceOf(this.alice.address)).to.equal(100);
   });
 
 
