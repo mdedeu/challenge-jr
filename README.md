@@ -1,15 +1,9 @@
-# Basic Sample Hardhat Project
+## Rock Paper Scissors
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+# How do you play?
 
-Try running some of the following tasks:
+1. Activate your address. You'll have to approve the erc20-token fee amount and call activatePlayer().
+2. Send your move: 1 for Rock , 2 for Paper, 3 for Scissors
+3. Play against an opponent with play function.
+4. Winner gets all of the tokens, loser absolutely nothing.  
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
-```
