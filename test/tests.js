@@ -86,6 +86,8 @@ describe("RockPaperScissors", function () {
     await this.rockpaperscissors.uncooperativeAdversary();
 
     expect(await this.sampletoken.balanceOf(this.alice.address)).to.equal(100);
+
+    await expect(this.rockpaperscissors.uncooperativeAdversary()).to.be.reverted;
   });
 
 
