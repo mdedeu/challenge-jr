@@ -15,7 +15,7 @@ contract RockPaperScissors {
 
     constructor(address _token, uint _fare){
         tokenAddress = _token;
-        fare = _fare
+        fare = _fare;
     }
     
     function play(address _adversary) external{
