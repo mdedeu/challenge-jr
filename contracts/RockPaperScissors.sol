@@ -1,3 +1,4 @@
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
@@ -24,7 +25,7 @@ contract RockPaperScissors {
         allowed[msg.sender] =  false;
         allowed[adversary] =  false;
 
-        address token = IERC20(tokenAddress);
+        IERC20 token = IERC20(tokenAddress);
         if(winner == msg.sender){
             token.transfer(msg.sender, 200);
         }else if(winner == adversary){
@@ -48,7 +49,7 @@ contract RockPaperScissors {
     }
 
     function activatePlayer() external{
-        token = IERC20(tokenAddress);
+        IERC20 token = IERC20(tokenAddress);
         token.approve(msg.sender, 100);
         token.transferFrom(msg.sender, address(this), 100);
         allowed[msg.sender] =  true;
