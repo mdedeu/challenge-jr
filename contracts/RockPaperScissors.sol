@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "hardhat/console.sol";
 
 // to-do some incentive token to play, and variable rate depending on win or lose
 //to-do gas optimization
@@ -13,11 +14,10 @@ contract RockPaperScissors {
     mapping(address => bool) allowed;
     address tokenAddress;
     uint fare;
-
+    //i'm supposing 18 decimals token . BIG assumption
     constructor(address _token, uint _fare){
         tokenAddress = _token;
-        token = IERC20(tokenAddress);
-        fare = _fare * 10^token.getDecimals();
+        fare = _fare * 10^18;
     }
     
     function play(address _adversary) external{
@@ -55,7 +55,6 @@ contract RockPaperScissors {
 
     function activatePlayer() external{
         IERC20 token = IERC20(tokenAddress);
-        token.approve(msg.sender, fare);
         token.transferFrom(msg.sender, address(this), fare);
         allowed[msg.sender] =  true;
     }
