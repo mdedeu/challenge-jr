@@ -8,13 +8,13 @@ describe("RockPaperScissors", function () {
     this.RockPaperScissors = await hre.ethers.getContractFactory("RockPaperScissors");
     
     this.SampleToken = await hre.ethers.getContractFactory("SampleToken");
-    this.sampletoken = await this.SampleToken.deploy(10000*10^18, this.bob.address);
+    this.sampletoken = await this.SampleToken.deploy(200, this.bob.address);
     
     this.rockpaperscissors = await this.RockPaperScissors.deploy(this.sampletoken.address, 100);
     await this.rockpaperscissors.deployed();
 
-    await this.sampletoken.approve(this.rockpaperscissors.address, 100 * 10^18);
-    await this.sampletoken.connect(this.bob).approve(this.rockpaperscissors.address, 100 * 10^18);
+    await this.sampletoken.approve(this.rockpaperscissors.address, 100);
+    await this.sampletoken.connect(this.bob).approve(this.rockpaperscissors.address, 100);
   })
 
   it("Player1 wins", async function () {
@@ -28,6 +28,10 @@ describe("RockPaperScissors", function () {
     await this.rockpaperscissors.connect(this.bob).sendMove(3);
 
     await this.rockpaperscissors.play(this.bob.address);
+  
+    expect(await this.sampletoken.balanceOf(this.bob.address)).to.equal(0);
+    expect(await this.sampletoken.balanceOf(this.alice.address)).to.equal(200);
+    expect(await this.sampletoken.balanceOf(this.rockpaperscissors.address)).to.equal(0);
 
   });
 
@@ -42,6 +46,10 @@ describe("RockPaperScissors", function () {
     await this.rockpaperscissors.connect(this.bob).sendMove(2);
 
     await this.rockpaperscissors.play(this.bob.address);
+
+    expect(await this.sampletoken.balanceOf(this.bob.address)).to.equal(200);
+    expect(await this.sampletoken.balanceOf(this.alice.address)).to.equal(0);
+    expect(await this.sampletoken.balanceOf(this.rockpaperscissors.address)).to.equal(0);
 
   });
 

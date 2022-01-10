@@ -16,7 +16,7 @@ contract RockPaperScissors {
     //i'm supposing 18 decimals token . BIG assumption
     constructor(address _token, uint _fare){
         tokenAddress = _token;
-        fare = _fare * 10^18;
+        fare = _fare;
     }
     
     function play(address _adversary) external{
