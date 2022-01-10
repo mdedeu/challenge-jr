@@ -1,27 +1,37 @@
 pragma solidity ^0.8.0;
 
 // to-do some incentive token to play, and variable rate depending on win or lose
+//to-do deposit limitation
 contract RockPaperScissors {
 
-    enum Move{NOTREADY,ROCK,PAPER,SCISSORS}
-    mapping(address =>Move) moves;
-
+    mapping(address => uint) moves;
+    
     function play(address adversary) public {
-        require(moves[msg.sender]!= Move.NOTREADY && moves[adversary] != Move.NOTREADY);
+        require(moves[msg.sender] != 0 && moves[adversary] != 0);
         address winner = decideWinner(adversary);
-        moves[adversary] = Move.NOTREADY;
-        moves[msg.sender] = Move.NOTREADY;
-        //to-do transfer tokens to winner
+        
+        moves[adversary] = 0;
+        moves[msg.sender] = 0;
+        if(winner == msg.sender){
+            //to-do transfer all tokens to winner
+        }else if(winner == adversary){
+            
+        }
+
     }
 
-    function decideWinner(address adversary) private returns(address){
-        //game-engine
+    function decideWinner(address adversary) private view returns(address){
+            if (moves[msg.sender] != moves[adversary]) {
+                 return (moves[msg.sender] == (moves[adversary] + 1) % 3) ? msg.sender: adversary;
+            } else {
+               return address(0);
+            }
     }
 
-    function sendMove(Move move, address adversary) public {
-      //check tokens balance used
-      //check adversary state
-      //play
+    function sendMove(uint move) public {
+      require(move > 0 && move < 4);
+      moves[msg.sender] = move;
+      //approveTokens
     }
 
 
