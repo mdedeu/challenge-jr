@@ -15,7 +15,7 @@ contract RockPaperScissors {
 
     constructor(address _token, uint _fare){
         tokenAddress = _token;
-        fare = _fare;
+        fare = _fare * 10^18;
     }
     
     function play(address _adversary) external{
@@ -30,9 +30,9 @@ contract RockPaperScissors {
 
         IERC20 token = IERC20(tokenAddress);
         if(winner == msg.sender){
-            token.transfer(msg.sender, 200);
+            token.transfer(msg.sender, fare * 2);
         }else if(winner == _adversary){
-            token.transfer(_adversary, 200);
+            token.transfer(_adversary, fare*2 );
         }
         
     }
@@ -53,8 +53,8 @@ contract RockPaperScissors {
 
     function activatePlayer() external{
         IERC20 token = IERC20(tokenAddress);
-        token.approve(msg.sender, 100);
-        token.transferFrom(msg.sender, address(this), 100);
+        token.approve(msg.sender, fare);
+        token.transferFrom(msg.sender, address(this), fare);
         allowed[msg.sender] =  true;
     }
 }
