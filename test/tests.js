@@ -53,6 +53,24 @@ describe("RockPaperScissors", function () {
 
   });
 
+  it("Draw", async function () {
+    
+    await this.rockpaperscissors.activatePlayer();
+    await this.rockpaperscissors.connect(this.bob).activatePlayer();
+    
+    //rock
+    await this.rockpaperscissors.sendMove(1);
+    //paper
+    await this.rockpaperscissors.connect(this.bob).sendMove(1);
+
+    await this.rockpaperscissors.play(this.bob.address);
+
+    expect(await this.sampletoken.balanceOf(this.bob.address)).to.equal(0);
+    expect(await this.sampletoken.balanceOf(this.alice.address)).to.equal(0);
+    expect(await this.sampletoken.balanceOf(this.rockpaperscissors.address)).to.equal(200);
+
+  });
+
   it("Some of the players have not deposited initial  token amount", async function () {
     
     await this.rockpaperscissors.activatePlayer();
