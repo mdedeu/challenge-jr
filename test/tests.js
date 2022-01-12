@@ -65,9 +65,9 @@ describe("RockPaperScissors", function () {
 
     await this.rockpaperscissors.play(this.bob.address);
 
-    expect(await this.sampletoken.balanceOf(this.bob.address)).to.equal(0);
-    expect(await this.sampletoken.balanceOf(this.alice.address)).to.equal(0);
-    expect(await this.sampletoken.balanceOf(this.rockpaperscissors.address)).to.equal(200);
+    expect(await this.sampletoken.balanceOf(this.bob.address)).to.equal(100);
+    expect(await this.sampletoken.balanceOf(this.alice.address)).to.equal(100);
+    expect(await this.sampletoken.balanceOf(this.rockpaperscissors.address)).to.equal(0);
 
   });
 

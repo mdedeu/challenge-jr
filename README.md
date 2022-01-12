@@ -7,5 +7,7 @@
 3. Play against an opponent with play function.
 4. Winner gets all of the tokens, loser absolutely nothing.  
 
+In case of a draw, you get back your money.
+
 If you face an uncooperative player and he or she does not send a move in 30 days, yo can withdraw your money with uncooperativeAdversary function
 

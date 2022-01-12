@@ -34,6 +34,9 @@ contract RockPaperScissors {
             token.transfer(msg.sender, fare * 2);
         }else if(winner == _adversary){
             token.transfer(_adversary, fare*2 );
+        }else{
+            token.transfer(msg.sender, fare);
+            token.transfer(_adversary, fare);
         }
         
     }
